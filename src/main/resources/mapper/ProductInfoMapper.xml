@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.imooc.sellproduct.mapper.ProductInfoMapper">
+
+
+    <select id="getProductLists" resultType="com.imooc.sellproduct.model.ProductInfo">
+
+        select product_id productId, product_name productName , product_price productPrice ,product_stock productStock , product_description productDescription , product_icon productIcon , product_status productStatus , category_type categoryType from product_info where product_status=0
+
+    </select>
+
+
+</mapper>
+

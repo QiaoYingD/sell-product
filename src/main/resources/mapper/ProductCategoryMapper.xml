@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.imooc.sellproduct.mapper.ProductCategoryMapper">
+
+
+    <select id="getCategoryLists" resultType="com.imooc.sellproduct.model.ProductCategory">
+
+        select category_id categoryId , category_name categoryName , category_type categoryType from product_category
+        where category_type in(
+        <foreach collection="list" item="item" index="index" separator=",">
+            #{item}
+        </foreach>
+        )
+    </select>
+
+
+</mapper>
+
