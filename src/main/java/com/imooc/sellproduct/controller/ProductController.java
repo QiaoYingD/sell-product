@@ -3,6 +3,7 @@ package com.imooc.sellproduct.controller;
 import com.imooc.sellproduct.VO.ProductInfoVO;
 import com.imooc.sellproduct.VO.ProductVo;
 import com.imooc.sellproduct.VO.ResultVO;
+import com.imooc.sellproduct.dto.CartDto;
 import com.imooc.sellproduct.mapper.ProductInfoMapper;
 import com.imooc.sellproduct.model.ProductCategory;
 import com.imooc.sellproduct.model.ProductInfo;
@@ -11,9 +12,7 @@ import com.imooc.sellproduct.servie.ProductService;
 import com.imooc.sellproduct.utils.ResultUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.xml.transform.Result;
@@ -67,5 +66,19 @@ public class ProductController {
         return ResultUtils.success(productVoList);
     }
 
+    /**
+     * 获取商品列表（给订单服务调用）
+     *
+     * @param productId
+     * @return
+     */
+    @PostMapping("/getProductForOrder")
+    public List<ProductInfo> getProductForOrder(@RequestBody List<String> productId) {
+        return productService.getProductByIdList(productId);
+    }
 
+    @PostMapping("/decreaseStock")
+    public void decreaseStock(@RequestBody List<CartDto> cartDtos) {
+        productService.decreaseStock(cartDtos);
+    }
 }

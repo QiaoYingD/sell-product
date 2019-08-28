@@ -3,11 +3,72 @@
 <mapper namespace="com.imooc.sellproduct.mapper.ProductInfoMapper">
 
 
+    <resultMap type="com.imooc.sellproduct.model.ProductInfo" id="BaseResultMap">
+        <!--  数据库列的注释是：  . 创建时间: 2019-08-27 15:32:33  -->
+        <id property="productId" column="product_id"/>
+        <!--  数据库列的注释是： 商品名称 . 创建时间: 2019-08-27 15:32:33  -->
+        <result property="productName" column="product_name"/>
+        <!--  数据库列的注释是： 商品单价 . 创建时间: 2019-08-27 15:32:33  -->
+        <result property="productPrice" column="product_price"/>
+        <!--  数据库列的注释是： 商品库存 . 创建时间: 2019-08-27 15:32:33  -->
+        <result property="productStock" column="product_stock"/>
+        <!--  数据库列的注释是： 描述 . 创建时间: 2019-08-27 15:32:33  -->
+        <result property="productDescription" column="product_description"/>
+        <!--  数据库列的注释是： 小图 . 创建时间: 2019-08-27 15:32:33  -->
+        <result property="productIcon" column="product_icon"/>
+        <!--  数据库列的注释是： 商品状态0正常1下架 . 创建时间: 2019-08-27 15:32:33  -->
+        <result property="productStatus" column="product_status"/>
+        <!--  数据库列的注释是： 类目编号 . 创建时间: 2019-08-27 15:32:33  -->
+        <result property="categoryType" column="category_type"/>
+    </resultMap>
+
+    <!-- 编辑表中所有的列 id 为 Columns -->
+    <sql id="Columns">product_id,product_name,product_price,product_stock,product_description,product_icon,product_status,category_type</sql>
+
+    <!--查询单个对象-->
+    <select id="getProduct" resultMap="BaseResultMap">
+        select <include refid="Columns"></include> from product_info
+        <where>
+            <if test="productId !=null and productId != '' ">
+                and product_id = #{productId}
+            </if>
+
+        </where>
+    </select>
+
     <select id="getProductLists" resultType="com.imooc.sellproduct.model.ProductInfo">
 
         select product_id productId, product_name productName , product_price productPrice ,product_stock productStock , product_description productDescription , product_icon productIcon , product_status productStatus , category_type categoryType from product_info where product_status=0
 
     </select>
+
+
+    <select id="getProductByIdList" resultMap="BaseResultMap">
+        select <include refid="Columns"></include> from product_info
+        <where>
+            product_info.product_id in(
+            <foreach collection="list" item="item" index="index" separator=",">
+                #{item}
+            </foreach>
+            )
+        </where>
+    </select>
+
+
+    <!-- 更新方法-->
+    <update id="updateProduct">
+        update product_info
+        <set>
+            <if test="productName !=null and productName != ''">product_name = #{productName},</if>
+            <if test="productPrice !=null and productPrice != ''">product_price = #{productPrice},</if>
+            <if test="productStock !=null ">product_stock = #{productStock},</if>
+            <if test="productDescription !=null and productDescription != ''">product_description = #{productDescription},</if>
+            <if test="productIcon !=null and productIcon != ''">product_icon = #{productIcon},</if>
+            <if test="productStatus !=null and productStatus != ''">product_status = #{productStatus},</if>
+            <if test="categoryType !=null and categoryType != ''">category_type = #{categoryType},</if>
+        </set>
+        where product_id = #{productId}
+    </update>
 
 
 </mapper>

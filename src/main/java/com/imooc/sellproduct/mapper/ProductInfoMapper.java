@@ -8,5 +8,10 @@ public interface ProductInfoMapper {
 
     List<ProductInfo> getProductLists();
 
+    ProductInfo getProduct(ProductInfo productInfo);
+
+    List<ProductInfo> getProductByIdList(List<String> productId);
+
+    void updateProduct(ProductInfo productInfo);
 
 }
