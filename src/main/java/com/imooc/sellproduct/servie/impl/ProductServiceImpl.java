@@ -36,6 +36,10 @@ public class ProductServiceImpl implements ProductService {
         return productInfoMapper.getProductByIdList(productId);
     }
 
+    /**
+     * 发送消息队列
+     * @param cartDtos
+     */
     @Override
     public void decreaseStock(List<CartDto> cartDtos) {
         List<ProductInfo> productInfos = decreaseStockProcess(cartDtos);
